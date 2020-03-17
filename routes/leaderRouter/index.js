@@ -20,25 +20,25 @@ routes.route('/')
     res.end('Deleting all leaders');
 });
 
-routes.route('/:dishId')
+routes.route('/:leaderId')
 .all((req,res,next) => {
     res.status(200).setHeader('Content-Type', 'text/plain');
     next();
 })
 .get((req,res,next) => {
-    res.end('Will send details of the leader: ' + req.params.dishId +' to you!');
+    res.end('Will send details of the leader: ' + req.params.leaderId +' to you!');
 })
 .post((req, res, next) => {
-    res.status(403).end('POST operation not supported on /leaders/'+ req.params.dishId);
+    res.status(403).end('POST operation not supported on /leaders/'+ req.params.leaderId);
     
 })
 .put((req, res, next) => {
-    res.write('Updating the leader: ' + req.params.dishId + '\n');
+    res.write('Updating the leader: ' + req.params.leaderId + '\n');
     res.end('Will update the leader: ' + req.body.name + 
         ' with details: ' + req.body.description);
 })
 .delete((req, res, next) => {
-    res.end('Deleting leader: ' + req.params.dishId);
+    res.end('Deleting leader: ' + req.params.leaderId);
 });
 
 
