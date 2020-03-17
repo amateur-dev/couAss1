@@ -13,7 +13,7 @@ routes.get('/', (req, res)=>{
     
 });
 routes.use('/dishes', dishRouter);
-routes.use('/leader', leaderRouter);
-routes.use('/promotion', promotionRouter);
+routes.use('/leaders', leaderRouter);
+routes.use('/promotions', promotionRouter);
 
 module.exports = routes;
