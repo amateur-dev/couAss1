@@ -2,6 +2,13 @@ const routes = require('express').Router();
 
 const User = require('../models/users');
 
+routes.all("/", (req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Please proceed to loggin in.')
+  
+})
+
 routes.post("/signup", async (req, res, next) => {
     try {
         let user = await User.findOne({ username: req.body.username });

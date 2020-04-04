@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-
-
+require('dotenv').config();
 
 const userRouter = require('./routes/userRouter');
 const dishRouter = require('./routes/dishRouter');
@@ -12,7 +11,7 @@ const leaderRouter = require('./routes/leaderRouter');
 const promotionRouter = require('./routes/promotionRouter');
 
 const url = 'mongodb://localhost:27017/conFusion';
-const connect = mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,});
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, });
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,25 +28,45 @@ app.use(session({
 app.get('/', (req, res) => {
   res.status(200, { "Content-Type": "text/html" });
   res.end("<html>Thank you for visting the landing page.  Please visit the following links for individual pages:" + "<br>"
-      + "<a href=/dishes>dishes</a> <br>"
-      + "<a href=/leader>leader</a> <br>"
-      + "<a href=/promotion>promotion</a> <br>");
+    + "<a href=/dishes>dishes</a> <br>"
+    + "<a href=/leader>leader</a> <br>"
+    + "<a href=/promotion>promotion</a> <br>");
 
 });
 
-
-
 app.use('/users', userRouter);
+
+function auth (req, res, next) {
+  console.log(req.session);
+
+if(!req.session.user) {
+    var err = new Error('You are not authenticated!');
+    err.status = 403;
+    return next(err);
+}
+else {
+  if (req.session.user === 'authenticated') {
+    next();
+  }
+  else {
+    var err = new Error('You are not authenticated!');
+    err.status = 403;
+    return next(err);
+  }
+}
+}
+app.use(auth);
 app.use('/dishes', dishRouter);
 app.use('/leaders', leaderRouter);
 app.use('/promotions', promotionRouter);
 
-connect.then((db) =>{
+connect.then((db) => {
   console.log("Connected correctly to server");
 }, (err) => {
   console.log(err);
 })
-let PORT = 3000;
+
+let PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is working on localhost:${PORT}`);
 });
