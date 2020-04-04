@@ -1,7 +1,7 @@
 const routes = require('express').Router();
 // const mongoose = require('mongoose');
 
-const Leaders = require('../../models/leaders');
+const Leaders = require('../models/leaders');
 
 routes.route('/')
 .get((req,res,next) => {

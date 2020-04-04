@@ -1,7 +1,7 @@
 const routes = require('express').Router();
 // const mongoose = require('mongoose');
 
-const Dishes = require('../../models/dishes');
+const Dishes = require('../models/dishes');
 
 routes.route('/')
 .get((req,res,next) => {
