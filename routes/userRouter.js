@@ -43,9 +43,9 @@ routes.get('/logout', (req, res) => {
     res.redirect('/');
   }
   else {
-    var err = new Error('You are not logged in!');
-    err.status = 403;
-    next(err);
+    res.statusCode = 403;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({err: err});;
   }
 });
 
