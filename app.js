@@ -6,13 +6,14 @@ const FileStore = require('session-file-store')(session);
 require('dotenv').config();
 var passport = require('passport');
 var authenticate = require('./authenticate');
+var config = require('./config');
 
 const userRouter = require('./routes/userRouter');
 const dishRouter = require('./routes/dishRouter');
 const leaderRouter = require('./routes/leaderRouter');
 const promotionRouter = require('./routes/promotionRouter');
 
-const url = 'mongodb://localhost:27017/conFusion';
+const url = config.url;
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, });
 
 const app = express();
