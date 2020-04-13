@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
 var config = require('./config');
 var passport = require('passport');
 var authenticate = require('./authenticate');
@@ -20,10 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 
-
-
 app.use(passport.initialize());
-
 
 app.get('/', (req, res) => {
   res.status(200, { "Content-Type": "text/html" });
